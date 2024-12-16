@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:model="clr-namespace:UVM_Project.DTOs"
+             
+             x:Class="UVM_Project.MainPage">
+
+    <Grid RowDefinitions="Auto, Auto, *" RowSpacing="15" Margin="15">
+
+        <Button Grid.Row="0" Text="New User" Command="{Binding CreateCommand}"/>
+
+        <Label Grid.Row="1" Text="User List" FontSize="Subtitle"/>
+
+        <ScrollView Grid.Row="2">
+
+            <CollectionView ItemsSource="{Binding UserList}">
+
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="5" Orientation="Vertical"/>
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:UserDTO">
+
+                        <Border Padding="10,5" HorizontalOptions="FillAndExpand">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="5"/>
+                            </Border.StrokeShape>
+
+                            <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto"
+                                  ColumnDefinitions="Auto,*"
+                                  >
+
+                                <Label Grid.Row="0" Grid.Column="0" Text="Username" FontAttributes="Bold"/>
+                                <Label Grid.Row="0" Grid.Column="1" Text="{Binding UserName}" HorizontalOptions="End"/>
+
+                                <Label Grid.Row="1" Grid.Column="0" Text="Email" FontAttributes="Bold"/>
+                                <Label Grid.Row="1" Grid.Column="1" Text="{Binding Email}" HorizontalOptions="End"/>
+
+                                <Label Grid.Row="2" Grid.Column="0" Text="Department" FontAttributes="Bold"/>
+                                <Label Grid.Row="2" Grid.Column="1" Text="{Binding Department}" HorizontalOptions="End"/>
+
+                                <Label Grid.Row="3" Grid.Column="0" Text="Entry DAte" FontAttributes="Bold"/>
+                                <Label Grid.Row="3" Grid.Column="1" Text="{Binding CreatedDate, StringFormat='{O:dd/MM/yyyy}'}" HorizontalOptions="End"/>
+
+                                <Label Grid.Row="4" Grid.Column="0" Padding="0,15,10,5" Text="Edit" TextColor="Blue">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding BindingContext.EditCommand, Source={x:RelativeSource AncestorType={x:Type ContentPage}}}"
+                                                          CommandParameter="{Binding}">
+
+                                        </TapGestureRecognizer>
+                                    </Label.GestureRecognizers>
+                                </Label>
+
+                                <Label Grid.Row="4" Grid.Column="1" Padding="10,15,0,5" Text="Delete" TextColor="Red">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding BindingContext.DeleteCommand, Source={x:RelativeSource AncestorType={x:Type ContentPage}}}"
+                                 CommandParameter="{Binding}">
+
+                                        </TapGestureRecognizer>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                            </Grid>
+                        </Border>
+
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+
+        </ScrollView>
+
+    </Grid>
+
+</ContentPage>
